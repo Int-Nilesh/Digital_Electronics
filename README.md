@@ -1,2 +1,2 @@
 # Digital_Electronics
-This contains RTL designs and Complete testbenches of various digital electronics modules
+This contains RTL designs and Complete testbenches of various digital modules

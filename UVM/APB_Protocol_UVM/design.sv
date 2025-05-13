@@ -2,7 +2,7 @@ module apb (
   input pclk, //clock 
   input prst, // negative reset
   input psel, // select line each peripheral have its own select line master set psel high while communicating with slave 
-  input [31:0] paddr, // address line master put address of slave, if slave consisits of multiple reg we can access specific reg with this addr
+  input [7:0] paddr, // address line master put address of slave, if slave consisits of multiple reg we can access specific reg with this addr
   input [7:0] pwdata, // the data master wants to write on slave
   input penable, // enable line set high on next clock cycle when master is ready to send / recive data
   input pwrite, // set high while write operation / LOW on read operation
@@ -13,7 +13,7 @@ module apb (
   
   
   localparam [1:0] idle = 0, write = 1, read = 2;
-  reg [7:0] mem[16];
+  reg [7:0] mem[256];
   reg [1:0] state, nstate;
   
   bit addr_err; // address range error if address is outside specifiled rage it will set high in this case  above 15
@@ -98,7 +98,7 @@ module apb (
       data_value = 1'b 1;
   end
   
-  assign addr_err = ((nstate == write || read) && (paddr > 15)) ? 1'b 1 : 1'b 0;
+  assign addr_err = ((nstate == write || read) && (paddr > 200)) ? 1'b 1 : 1'b 0;
   assign addv_err = ((nstate == write || read) && add_value) ? 1'b 1 : 1'b 0;
   assign data_err = ((nstate == write || read) && data_value) ? 1'b 1 : 1'b 0; 
   

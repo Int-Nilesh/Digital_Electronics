@@ -2,6 +2,7 @@
 `include "sequencer.svh"
 `include "monitor.svh"
 `include "driver.svh"
+`include "coverage.svh"
 
 // The agent contains sequencer, driver, and monitor
 class apb_agent extends uvm_agent;
@@ -13,6 +14,7 @@ class apb_agent extends uvm_agent;
   apb_driver drv; //added by me 
   apb_monitor mon; //added by me 
   apb_sequence seq; //added by me 
+  apb_coverage cov;
 
   
   
@@ -29,6 +31,7 @@ class apb_agent extends uvm_agent;
     drv = apb_driver::type_id::create("drv", this); //added by me
     mon = apb_monitor::type_id::create("mon", this); //added by me
     seq = apb_sequence::type_id::create("seq", this); //added by me
+    cov = apb_coverage::type_id::create("cov", this); // added by me
     sequencer = uvm_sequencer#(apb_packet)::type_id::create("sequencer", this); //added by me
     `uvm_info("TEST", $sformatf("Agent build Passed"), UVM_MEDIUM); //added by me
   endfunction    
@@ -41,6 +44,7 @@ class apb_agent extends uvm_agent;
     //monitor.drvdone = driver.drvdone; // added by pro is wrong
     mon.drvdone = drv.drvdone; // added by me
     mon.mondone = drv.mondone; // added by me
+    mon.mon_analysis_port.connect(cov.apb_cover_imp); //added by me
     `uvm_info("TEST", $sformatf("Agent connect Passed"), UVM_MEDIUM); //added by me
   endfunction
 

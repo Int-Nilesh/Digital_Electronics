@@ -23,7 +23,7 @@ class apb_test extends uvm_test;
   endfunction
 
   task run_phase(uvm_phase phase);
-    env.agent.seq.count = 30;
+    env.agent.seq.count = 512;
      // the test run_phase is empty. The env and agent run_phase take care of things.
   endtask
 

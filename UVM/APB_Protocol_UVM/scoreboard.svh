@@ -3,7 +3,7 @@
 class apb_scoreboard extends uvm_scoreboard;
   `uvm_component_utils (apb_scoreboard)
   
-  bit [7:0] pwdata[16];
+  bit [7:0] pwdata[256];
   int err =0;
 	
   function new (string name = "apb_scoreboard", uvm_component parent);
